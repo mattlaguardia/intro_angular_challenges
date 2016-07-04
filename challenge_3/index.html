@@ -47,7 +47,7 @@
   <section class="exercises">
     <h4>Exercise #1:</h4>
 
-    <div id="change_me" data-ng-model="info">
+    <div id="change_me" data-ng-controller="infoController as info">
       <p>Here's an example of data-binding in the view:</p>
       Name: <input type="text" data-ng-model="info.name"></br>
       Height: <input type="number" steps="any" data-ng-model="info.height"></br>
@@ -71,21 +71,23 @@
       </li>
       <li>
         Before: What were <code>name</code> and <code>height</code> being attached ("bound") to?<br>
-        After: What are <code>name</code> and <code>height</code> bound to now?
+        <b>Answer: They were being bound to the page.</b><br>
+        After: What are <code>name</code> and <code>height</code> bound to now? <br>
+        <b>Answer: Now they are being bound to the page by the controller. With the (this) prototype.</b><br>
       </li>
     </ol>
   </section>
 
-  <section class="exercises">
+  <section class="exercises" data-ng-controller="numContoller as num">
     <h4>Exercise #2:</h4>
     <p>Instant Math!</p>
     <p>Can you get these simple calculators to work using only a view model (ng-model)?</p>
     <div>
-      <input type="number"> + <input type="number"> = {{ "?" }}
+      <input type="number" data-ng-model="num.num1"> + <input type="number" data-ng-model="num.num2"> = {{ num.num1 + num.num2 || 0 }}
     </div>
 
     <div>
-      <input type="number"> * <input type="number"> = {{ "?" }}
+      <input type="number" data-ng-model="num.num1"> * <input type="number" data-ng-model="num.num2"> = {{ num.num1 * num.num2 || 0 }}
     </div>
   </section>
 
@@ -94,16 +96,16 @@
     <p>Interest Calculator</p>
     <p>Can you plug a loanController into this view to make it display the form correctly?</p>
 
-    <div> <!-- HINT: add "loanController as loan" here -->
+    <div data-ng-controller="loanController as loan"> <!-- HINT: add "loanController as loan" here -->
           <!-- DON'T MODIFY ANYTHING ELSE -->
       <div class="form-group">
         <label>Loan Amount:</label>
-        <input type="number" ng-model="loan.amount">
+        <input type="number" data-ng-model="loan.amount">
       </div>
 
       <div class="form-group">
         <label>Interest Rate:</label>
-        <input type="number" step="any" ng-model="loan.apr">
+        <input type="number" step="any" data-ng-model="loan.apr">
       </div>
 
       <table>
@@ -118,18 +120,18 @@
         <tbody>
           <tr>
             <th>Month 1</th>
-            <td>${{loan.month(1).accrued_interest}}</td>
-            <td>${{loan.month(1).total_balance}}</td>
+            <td>${{loan.month(1).accrued_interest | currency}}</td>
+            <td>${{loan.month(1).total_balance | currency}}</td>
           </tr>
           <tr>
             <th>Month 2</th>
-            <td>${{loan.month(2).accrued_interest}}</td>
-            <td>${{loan.month(2).total_balance}}</td>
+            <td>${{loan.month(2).accrued_interest | currency}}</td>
+            <td>${{loan.month(2).total_balance | currency}}</td>
           </tr>
           <tr>
             <th>Month 12</th>
-            <td>${{loan.month(12).accrued_interest}}</td>
-            <td>${{loan.month(12).total_balance}}</td>
+            <td>${{loan.month(12).accrued_interest | currency}}</td>
+            <td>${{loan.month(12).total_balance | currency}}</td>
           </tr>
         </tbody>
       </table>
